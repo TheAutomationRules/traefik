@@ -1,0 +1,29 @@
+http:
+
+  routers:
+    to-consul-rasp:
+      rule: "Host(`rasp.lan`)"
+      service: "consul"
+      priority: 1000
+      entryPoints:
+        - consul
+    to-vault-rasp:
+      rule: "Host(`rasp.lan`)"
+      service: "vault"
+      priority: 1000
+      entryPoints:
+        - vault
+
+  services:
+    consul:
+      loadBalancer:
+        servers:
+          - url: "http://rasp01:8500"
+          - url: "http://rasp02:8500"
+          - url: "http://rasp03:8500"
+    vault:
+      loadBalancer:
+        servers:
+          - url: "http://rasp01:8200"
+          - url: "http://rasp02:8200"
+          - url: "http://rasp03:8200"

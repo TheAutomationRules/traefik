@@ -1,0 +1,50 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# -- (Optional) Change Log Level and Format here...
+#     - loglevels [DEBUG, INFO, WARNING, ERROR, CRITICAL]
+#     - format [common, json, logfmt]
+log:
+  level: ERROR
+  format: common
+  filePath: ./var/log/traefik/traefik.log
+
+# -- (Optional) Enable Accesslog and change Format here...
+#     - format [common, json, logfmt]
+accessLog:
+  format: common
+  filePath: ./var/log/traefik/access.log
+
+
+# -- (Optional) Enable API and Dashboard here, don't do in production
+api:
+  dashboard: true
+  insecure: true
+
+# -- Change EntryPoints here...
+entryPoints:
+
+  # Web EntryPoints
+  web:
+    address: :80
+  websecure:
+    address: :443
+
+  # -- (Optional) Add custom Entrypoint
+  custom:
+    address: :10000
+
+  # HashiCorp Services
+  consul:
+    address: :8500
+  vault:
+    address: :8200
+
+providers:
+  docker:
+    # -- (Optional) Enable this, if you want to expose all containers automatically
+    exposedByDefault: false
+  file:
+    directory: ./config/conf
+    watch: true # -- (Optional) Enable this, if you want to watch the file changes
